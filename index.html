@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcards</title>
     <style>
+        /* ============================================
+           1. DESIGN TOKENS
+           ============================================ */
         :root {
             --bg: #f5f5f7;
             --surface: #ffffff;
@@ -16,12 +21,21 @@
             --warning: #ff9500;
             --error: #ff3b30;
             --radius: 12px;
-            --shadow: 0 4px 16px rgba(0,0,0,0.08);
-            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+            --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --input-correct-bg: #e8e8ed;
+            --input-wrong-bg: #ffeceb;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        /* ============================================
+           2. RESET & BASE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
@@ -36,7 +50,9 @@
             margin: 0 auto;
         }
 
-        /* Study Panel */
+        /* ============================================
+           3. STUDY PANEL
+           ============================================ */
         .study-panel {
             background: var(--surface);
             border-radius: 24px;
@@ -49,15 +65,19 @@
             box-shadow: var(--shadow);
         }
 
-        .welcome-screen { text-align: center; }
-        .welcome-screen h1 { 
-            font-size: 2.5rem; 
+        .welcome-screen {
+            text-align: center;
+        }
+
+        .welcome-screen h1 {
+            font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 0.75rem;
             letter-spacing: -0.02em;
         }
-        .welcome-screen p { 
-            color: var(--text-secondary); 
+
+        .welcome-screen p {
+            color: var(--text-secondary);
             font-size: 1.125rem;
             margin-bottom: 2.5rem;
         }
@@ -76,6 +96,9 @@
             margin-bottom: 2.5rem;
         }
 
+        /* ============================================
+           4. FORM INPUTS
+           ============================================ */
         input[type="text"] {
             border: 2px solid var(--border);
             background: var(--bg);
@@ -88,21 +111,55 @@
             transition: all 0.2s ease;
         }
 
-        input[type="text"]:focus { 
-            border-color: var(--primary); 
+        input[type="text"]:focus {
+            border-color: var(--primary);
             background: var(--surface);
-            box-shadow: 0 0 0 4px rgba(0,113,227,0.1);
+            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
         }
 
-        .msg { 
-            margin-top: 1.5rem; 
+        input[type="file"] {
+            display: none;
+        }
+
+        .input-correct {
+            background: var(--input-correct-bg) !important;
+        }
+
+        .input-wrong {
+            background: var(--input-wrong-bg) !important;
+        }
+
+        /* ============================================
+           5. FEEDBACK MESSAGES
+           ============================================ */
+        .msg {
+            margin-top: 1.5rem;
             min-height: 1.5rem;
             font-weight: 500;
         }
-        .msg.ok { color: var(--success); }
-        .msg.no { color: var(--error); }
 
-        /* Buttons */
+        .msg.ok {
+            color: var(--success);
+        }
+
+        .msg.no {
+            color: var(--error);
+        }
+
+        .sentence .ok {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .sentence .no {
+            color: var(--error);
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        /* ============================================
+           6. BUTTONS
+           ============================================ */
         button {
             font-family: inherit;
             font-size: 1rem;
@@ -116,53 +173,69 @@
             font-weight: 500;
         }
 
-        button:hover { transform: translateY(-1px); }
-        button:active { transform: translateY(0); }
+        button:hover {
+            transform: translateY(-1px);
+        }
 
-        .btn-primary { 
-            background: var(--primary); 
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: var(--primary);
             color: #fff;
             padding: 1rem 2.5rem;
             font-size: 1.125rem;
-            box-shadow: 0 4px 12px rgba(0,113,227,0.3);
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
         }
-        .btn-primary:hover { 
-            background: var(--primary-hover); 
-            box-shadow: 0 6px 16px rgba(0,113,227,0.4);
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 6px 16px rgba(0, 113, 227, 0.4);
         }
-        .btn-primary:disabled { 
-            background: #ccc; 
+
+        .btn-primary:disabled {
+            background: #ccc;
             box-shadow: none;
             cursor: not-allowed;
             transform: none;
         }
 
-        .btn-secondary { 
+        .btn-secondary {
             background: var(--surface);
             border: 1px solid var(--border);
             padding: 1rem 2.5rem;
             font-size: 1.125rem;
         }
-        .btn-secondary:hover { 
+
+        .btn-secondary:hover {
             background: var(--bg);
             border-color: var(--text-secondary);
         }
 
-        .btn-danger { 
-            color: var(--error); 
-            background: rgba(255,59,48,0.08);
+        .btn-danger {
+            color: var(--error);
+            background: rgba(255, 59, 48, 0.08);
         }
-        .btn-danger:hover { background: rgba(255,59,48,0.12); }
 
-        .btn-add { 
-            background: var(--primary); 
+        .btn-danger:hover {
+            background: rgba(255, 59, 48, 0.12);
+        }
+
+        .btn-add {
+            background: var(--primary);
             color: #fff;
             padding: 0.5rem 1rem;
             font-size: 0.875rem;
         }
-        .btn-add:hover { background: var(--primary-hover); }
 
-        /* Panel Toggle */
+        .btn-add:hover {
+            background: var(--primary-hover);
+        }
+
+        /* ============================================
+           7. SIDE PANEL & OVERLAY
+           ============================================ */
         .panel-toggle {
             position: fixed;
             top: 1.5rem;
@@ -183,8 +256,8 @@
             z-index: 1200;
         }
 
-        .panel-toggle:hover { 
-            opacity: 1; 
+        .panel-toggle:hover {
+            opacity: 1;
             transform: scale(1.05);
             box-shadow: var(--shadow-lg);
         }
@@ -200,10 +273,9 @@
             border-radius: 10px;
             font-weight: 700;
             min-width: 18px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* Right Panel */
         .right-panel {
             position: fixed;
             top: 0;
@@ -218,12 +290,14 @@
             flex-direction: column;
         }
 
-        .right-panel.open { right: 0; }
+        .right-panel.open {
+            right: 0;
+        }
 
         .panel-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -231,15 +305,18 @@
             backdrop-filter: blur(4px);
         }
 
-        .panel-overlay.show { opacity: 1; visibility: visible; }
+        .panel-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
 
         .panel-header {
             padding: 1.5rem;
             border-bottom: 1px solid var(--border);
         }
 
-        .panel-header h2 { 
-            font-size: 1.25rem; 
+        .panel-header h2 {
+            font-size: 1.25rem;
             font-weight: 600;
         }
 
@@ -249,140 +326,188 @@
             padding: 1.25rem;
         }
 
-        /* Cards */
-        .card { 
-            background: var(--bg); 
-            border-radius: var(--radius); 
-            padding: 1.25rem; 
+        /* ============================================
+           8. CARDS & STATS
+           ============================================ */
+        .card {
+            background: var(--bg);
+            border-radius: var(--radius);
+            padding: 1.25rem;
             margin-bottom: 1rem;
         }
 
-        .card h3 { 
-            font-size: 0.75rem; 
-            text-transform: uppercase; 
+        .card h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--text-secondary); 
+            color: var(--text-secondary);
             margin-bottom: 1rem;
             font-weight: 600;
         }
 
-        /* Stats */
-        .stats { display: flex; gap: 0.75rem; }
-        
-        .stat { 
-            flex: 1; 
-            text-align: center; 
-            padding: 1rem; 
-            background: var(--surface); 
+        .stats {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .stat {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            background: var(--surface);
             border-radius: var(--radius);
             transition: transform 0.2s ease;
         }
-        
-        .stat:hover { transform: translateY(-2px); }
-        
-        .stat .num { 
-            font-size: 1.75rem; 
-            font-weight: 700; 
+
+        .stat:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat .num {
+            font-size: 1.75rem;
+            font-weight: 700;
             display: block;
             line-height: 1;
             margin-bottom: 0.25rem;
         }
-        
-        .stat .label { 
-            font-size: 0.75rem; 
+
+        .stat .label {
+            font-size: 0.75rem;
             color: var(--text-secondary);
             font-weight: 500;
         }
-        
-        .stat.due { background: #fff4e6; }
-        .stat.due .num { color: var(--warning); }
-        .stat.mastered { background: #e8f5e9; }
-        .stat.mastered .num { color: var(--success); }
 
-        /* Data Actions */
-        .data-actions { display: flex; gap: 0.5rem; }
-        .data-actions button { flex: 1; font-size: 0.875rem; padding: 0.625rem; }
+        .stat.due {
+            background: #fff4e6;
+        }
 
-        /* Sort & List */
-        .sort-select { 
+        .stat.due .num {
+            color: var(--warning);
+        }
+
+        .stat.mastered {
+            background: #e8f5e9;
+        }
+
+        .stat.mastered .num {
+            color: var(--success);
+        }
+
+        /* ============================================
+           9. DATA ACTIONS & WORD LIST
+           ============================================ */
+        .data-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .data-actions button {
+            flex: 1;
+            font-size: 0.875rem;
+            padding: 0.625rem;
+        }
+
+        .sort-select {
             width: 100%;
             background: var(--surface);
-            border: 1px solid var(--border); 
-            border-radius: 8px; 
-            padding: 0.5rem 0.75rem; 
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
             font-size: 0.875rem;
             margin-bottom: 0.75rem;
             cursor: pointer;
             outline: none;
         }
 
-        .sort-select:focus { border-color: var(--primary); }
+        .sort-select:focus {
+            border-color: var(--primary);
+        }
 
-        .word-list { max-height: 320px; overflow-y: auto; }
+        .word-list {
+            max-height: 320px;
+            overflow-y: auto;
+        }
 
-        .word-item { 
-            display: flex; 
-            align-items: center; 
-            padding: 0.75rem; 
-            border-radius: 8px; 
-            gap: 0.75rem; 
+        .word-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            gap: 0.75rem;
             background: var(--surface);
             margin-bottom: 0.5rem;
             transition: all 0.15s ease;
         }
-        
-        .word-item:hover { 
+
+        .word-item:hover {
             background: var(--bg);
             transform: translateX(2px);
         }
 
-        .word-status { 
-            width: 8px; 
-            height: 8px; 
-            border-radius: 50%; 
+        .word-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
             flex-shrink: 0;
         }
-        
-        .word-status.due { background: var(--warning); }
-        .word-status.ok { background: var(--success); }
-        .word-status.new { background: var(--text-secondary); }
 
-        .word-info { flex: 1; }
-        
-        .word-name { 
-            font-weight: 600; 
+        .word-status.due {
+            background: var(--warning);
+        }
+
+        .word-status.ok {
+            background: var(--success);
+        }
+
+        .word-status.new {
+            background: var(--text-secondary);
+        }
+
+        .word-info {
+            flex: 1;
+        }
+
+        .word-name {
+            font-weight: 600;
             font-size: 1rem;
             margin-bottom: 0.125rem;
         }
-        
-        .word-meta { 
-            font-size: 0.8125rem; 
+
+        .word-meta {
+            font-size: 0.8125rem;
             color: var(--text-secondary);
         }
 
-        .word-actions { display: flex; gap: 0.25rem; }
-        
-        .word-actions button { 
-            padding: 0.4rem 0.6rem; 
-            font-size: 0.875rem; 
+        .word-actions {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .word-actions button {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.875rem;
             background: transparent;
             border-radius: 6px;
         }
-        
-        .word-actions button:hover { background: var(--border); }
 
-        .empty { 
-            text-align: center; 
-            padding: 3rem 2rem; 
+        .word-actions button:hover {
+            background: var(--border);
+        }
+
+        .empty {
+            text-align: center;
+            padding: 3rem 2rem;
             color: var(--text-secondary);
             font-size: 0.9375rem;
         }
 
-        /* Modal */
+        /* ============================================
+           10. MODAL
+           ============================================ */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.4);
             display: none;
             align-items: center;
             justify-content: center;
@@ -390,103 +515,295 @@
             backdrop-filter: blur(4px);
         }
 
-        .modal-overlay.show { display: flex; }
+        .modal-overlay.show {
+            display: flex;
+        }
 
-        .modal { 
-            background: var(--surface); 
-            border-radius: 20px; 
-            padding: 2rem; 
+        .modal {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 2rem;
             width: 420px;
             box-shadow: var(--shadow-lg);
             animation: modal-in 0.3s ease;
         }
 
-        @keyframes modal-in {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .modal h3 { 
-            font-size: 1.5rem; 
+        .modal h3 {
+            font-size: 1.5rem;
             margin-bottom: 1.5rem;
             font-weight: 600;
         }
 
-        .form-group { margin-bottom: 1.25rem; }
-        
-        .form-group label { 
-            display: block; 
-            font-size: 0.875rem; 
-            font-weight: 500;
-            color: var(--text-secondary); 
-            margin-bottom: 0.5rem; 
+        .form-group {
+            margin-bottom: 1.25rem;
         }
-        
-        .form-group input, 
-        .form-group textarea { 
-            width: 100%; 
-            padding: 0.875rem 1rem; 
-            border: 1px solid var(--border); 
-            border-radius: var(--radius); 
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             font: inherit;
             font-size: 1rem;
             transition: all 0.2s ease;
         }
-        
-        .form-group textarea { 
-            height: 80px; 
-            resize: none; 
+
+        .form-group textarea {
+            height: 80px;
+            resize: none;
         }
-        
-        .form-group input:focus, 
-        .form-group textarea:focus { 
-            outline: none; 
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0,113,227,0.1);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
         }
 
-        .modal-actions { 
-            display: flex; 
-            gap: 0.75rem; 
-            justify-content: flex-end; 
-            margin-top: 1.5rem; 
+        .modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
         }
 
-        .error { 
-            color: var(--error); 
-            font-size: 0.875rem; 
+        .error {
+            color: var(--error);
+            font-size: 0.875rem;
             margin-top: 0.5rem;
             display: none;
             font-weight: 500;
         }
-        
-        .error.show { display: block; }
 
-        /* Animations */
-        .shake { animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
-        
-        @keyframes shake {
-            10%, 90% { transform: translateX(-1px); }
-            20%, 80% { transform: translateX(2px); }
-            30%, 50%, 70% { transform: translateX(-4px); }
-            40%, 60% { transform: translateX(4px); }
+        .error.show {
+            display: block;
         }
 
-        input[type="file"] { display: none; }
+        /* ============================================
+           11. TOAST NOTIFICATIONS
+           ============================================ */
+        .toast-container {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1300;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: var(--text);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transform: translateY(-12px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: auto;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        .toast.warning {
+            background: var(--warning);
+        }
+
+        /* ============================================
+           12. CONFIRM DIALOG
+           ============================================ */
+        .confirm-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1200;
+            backdrop-filter: blur(4px);
+        }
+
+        .confirm-overlay.show {
+            display: flex;
+        }
+
+        .confirm-dialog {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 360px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            animation: modal-in 0.3s ease;
+        }
+
+        .confirm-dialog .confirm-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .confirm-dialog h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .confirm-dialog p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .confirm-actions button {
+            min-width: 100px;
+        }
+
+        .btn-confirm-danger {
+            background: var(--error);
+            color: #fff;
+        }
+
+        .btn-confirm-danger:hover {
+            background: #e0332b;
+        }
+
+        /* ============================================
+           13. ANIMATIONS
+           ============================================ */
+        .shake {
+            animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        }
+
+        @keyframes shake {
+
+            10%,
+            90% {
+                transform: translateX(-1px);
+            }
+
+            20%,
+            80% {
+                transform: translateX(2px);
+            }
+
+            30%,
+            50%,
+            70% {
+                transform: translateX(-4px);
+            }
+
+            40%,
+            60% {
+                transform: translateX(4px);
+            }
+        }
+
+        @keyframes modal-in {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ============================================
+           14. RESPONSIVE
+           ============================================ */
+        @media (max-width: 640px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+
+            .study-panel {
+                padding: 2rem 1.5rem;
+                min-height: 320px;
+                border-radius: 16px;
+            }
+
+            .welcome-screen h1 {
+                font-size: 1.75rem;
+            }
+
+            .sentence {
+                font-size: 1.25rem;
+            }
+
+            input[type="text"] {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .right-panel {
+                width: 100vw;
+                right: -100vw;
+            }
+
+            .right-panel.open {
+                right: 0;
+            }
+
+            .modal {
+                width: calc(100vw - 2rem);
+                max-width: 420px;
+            }
+        }
     </style>
 </head>
+
 <body>
+    <!-- ==========================================
+         MAIN STUDY AREA
+         ========================================== -->
     <div class="container">
         <main class="study-panel" id="studyPanel">
+            <!-- Welcome Screen -->
             <div class="welcome-screen" id="welcomeScreen">
                 <h1>📚 Flashcards</h1>
                 <p><span id="dueCount">0</span> cards due for review</p>
                 <div style="display: flex; gap: 0.75rem; justify-content: center;">
-                    <button class="btn-primary" id="startBtn" onclick="startStudy()" disabled>No Cards Due</button>
-                    <button class="btn-secondary" id="practiceBtn" onclick="startPractice()" style="display: none;">Practice All</button>
+                    <button class="btn-primary" id="startBtn" disabled>No Cards Due</button>
+                    <button class="btn-secondary" id="practiceBtn" style="display: none;">Practice All</button>
                 </div>
             </div>
 
+            <!-- Study Interface -->
             <div id="studyInterface" style="display: none; width: 100%; text-align: center;">
                 <p class="sentence" id="sentence"></p>
                 <p class="hint" id="hint"></p>
@@ -494,45 +811,62 @@
                 <p class="msg" id="msg"></p>
             </div>
 
+            <!-- Done Screen -->
             <div id="doneScreen" style="display: none; text-align: center;">
                 <h2 style="color: var(--success); margin-bottom: 1rem;">🎉 All Caught Up!</h2>
                 <p style="color: var(--text-secondary); margin-bottom: 2rem;">No more cards due for review.</p>
-                <button onclick="showWelcome()">Back to Home</button>
+                <button id="backHomeBtn">Back to Home</button>
             </div>
         </main>
     </div>
 
-    <button class="panel-toggle" onclick="togglePanel()" title="Dashboard">⚙️<span class="badge" id="dueBadge" style="display: none;">0</span></button>
+    <!-- ==========================================
+         PANEL TOGGLE BUTTON
+         ========================================== -->
+    <button class="panel-toggle" id="panelToggleBtn" title="Dashboard">
+        ⚙️<span class="badge" id="dueBadge" style="display: none;">0</span>
+    </button>
 
-    <div class="panel-overlay" id="panelOverlay" onclick="closePanel()"></div>
+    <!-- ==========================================
+         SIDE PANEL (DASHBOARD)
+         ========================================== -->
+    <div class="panel-overlay" id="panelOverlay"></div>
     <aside class="right-panel" id="rightPanel">
-        <div class="panel-header"><h2>📊 Dashboard</h2></div>
+        <div class="panel-header">
+            <h2>📊 Dashboard</h2>
+        </div>
         <div class="panel-content">
+            <!-- Statistics Card -->
             <div class="card">
                 <h3>Statistics</h3>
                 <div class="stats">
                     <div class="stat due"><span class="num" id="statDue">0</span><span class="label">Due</span></div>
-                    <div class="stat"><span class="num" id="statLearning">0</span><span class="label">Learning</span></div>
-                    <div class="stat mastered"><span class="num" id="statMastered">0</span><span class="label">Mastered</span></div>
+                    <div class="stat"><span class="num" id="statLearning">0</span><span class="label">Learning</span>
+                    </div>
+                    <div class="stat mastered"><span class="num" id="statMastered">0</span><span
+                            class="label">Mastered</span></div>
                 </div>
             </div>
 
+            <!-- Data Card -->
             <div class="card">
                 <h3>Data</h3>
                 <div class="data-actions">
-                    <button onclick="exportData()">📤 Export</button>
-                    <button onclick="importInput.click()">📥 Import</button>
-                    <button class="btn-danger" onclick="clearData()">🗑️ Clear</button>
+                    <button id="exportBtn">📤 Export</button>
+                    <button id="importBtn">📥 Import</button>
+                    <button class="btn-danger" id="clearBtn">🗑️ Clear</button>
                 </div>
-                <input type="file" id="importInput" accept=".json" onchange="importData(this)">
+                <input type="file" id="importInput" accept=".json">
             </div>
 
+            <!-- Word List Card -->
             <div class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
                     <h3 style="margin: 0;">Cards (<span id="totalCards">0</span>)</h3>
-                    <button class="btn-add" onclick="openModal()">+ Add</button>
+                    <button class="btn-add" id="addCardBtn">+ Add</button>
                 </div>
-                <select class="sort-select" id="sortSelect" onchange="renderList()">
+                <select class="sort-select" id="sortSelect">
                     <option value="due">Sort: Due First</option>
                     <option value="name-asc">Name: A → Z</option>
                     <option value="name-desc">Name: Z → A</option>
@@ -544,7 +878,10 @@
         </div>
     </aside>
 
-    <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+    <!-- ==========================================
+         ADD / EDIT MODAL
+         ========================================== -->
+    <div class="modal-overlay" id="modal">
         <div class="modal">
             <h3 id="modalTitle">Add Card</h3>
             <div class="form-group">
@@ -561,254 +898,703 @@
                 <p class="error" id="mError">Sentence must include the word</p>
             </div>
             <div class="modal-actions">
-                <button onclick="closeModal()">Cancel</button>
-                <button class="btn-primary" onclick="saveCard()">Save</button>
+                <button id="modalCancelBtn">Cancel</button>
+                <button class="btn-primary" id="modalSaveBtn">Save</button>
             </div>
         </div>
     </div>
 
+    <!-- ==========================================
+         TOAST CONTAINER
+         ========================================== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ==========================================
+         CONFIRM DIALOG
+         ========================================== -->
+    <div class="confirm-overlay" id="confirmOverlay">
+        <div class="confirm-dialog">
+            <div class="confirm-icon" id="confirmIcon">⚠️</div>
+            <h3 id="confirmTitle">Are you sure?</h3>
+            <p id="confirmMessage"></p>
+            <div class="confirm-actions">
+                <button id="confirmCancelBtn">Cancel</button>
+                <button class="btn-confirm-danger" id="confirmOkBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         APPLICATION JAVASCRIPT
+         ========================================== -->
     <script>
-        let cards = JSON.parse(localStorage.getItem('flashcards') || '[]');
-        let currentCard = null, editingIndex = -1, waitingForNext = false, practiceMode = false;
+        const App = (() => {
+            'use strict';
 
-        const intervals = [1, 10, 60, 180, 360, 720, 1440];
+            /* =============================================
+               MODULE 1: CONSTANTS
+               ============================================= */
+            const STORAGE_KEY = 'flashcards';
+            const STORAGE_CLEARED_KEY = 'flashcards_cleared';
+            const INTERVALS_MINUTES = [1, 10, 60, 180, 360, 720, 1440];
+            const MASTERY_THRESHOLD = 4;
 
-        if (cards.length === 0) {
-            cards = [
-                {w: 'apple', d: 'a round red or green fruit', s: 'She took a bite of the crisp apple.', level: 0, due: 0},
-                {w: 'ocean', d: 'a very large sea', s: 'The ocean waves crashed against the shore.', level: 0, due: 0},
-                {w: 'brilliant', d: 'very bright or intelligent', s: 'He had a brilliant idea for the project.', level: 0, due: 0}
+            const SEED_CARDS = [
+                { w: 'apple', d: 'a round red or green fruit', s: 'She took a bite of the crisp apple.', level: 0, due: 0 },
+                { w: 'ocean', d: 'a very large sea', s: 'The ocean waves crashed against the shore.', level: 0, due: 0 },
+                { w: 'brilliant', d: 'very bright or intelligent', s: 'He had a brilliant idea for the project.', level: 0, due: 0 },
             ];
-            saveCards();
-        }
 
-        function saveCards() { localStorage.setItem('flashcards', JSON.stringify(cards)); }
-
-        function getDueCards() { return cards.filter(c => (c.due || 0) <= Date.now()); }
-
-        function scheduleCard(card, correct) {
-            if (!card.level) card.level = 0;
-            card.level = correct ? card.level + 1 : Math.max(0, card.level - 1);
-            card.due = Date.now() + (intervals[Math.min(card.level, intervals.length - 1)] || 1) * 60000;
-        }
-
-        function formatTime(mins) {
-            return mins < 60 ? `${mins}m` : mins < 1440 ? `${Math.round(mins/60)}h` : `${Math.round(mins/1440)}d`;
-        }
-
-        function togglePanel() {
-            document.getElementById('rightPanel').classList.toggle('open');
-            document.getElementById('panelOverlay').classList.toggle('show');
-        }
-
-        function closePanel() {
-            document.getElementById('rightPanel').classList.remove('open');
-            document.getElementById('panelOverlay').classList.remove('show');
-        }
-
-        function updateStats() {
-            const due = getDueCards().length;
-            const mastered = cards.filter(c => (c.level || 0) >= 4).length;
-            const learning = cards.length - mastered;
-
-            document.getElementById('dueCount').textContent = due;
-            document.getElementById('statDue').textContent = due;
-            document.getElementById('statLearning').textContent = learning;
-            document.getElementById('statMastered').textContent = mastered;
-            document.getElementById('totalCards').textContent = cards.length;
-            
-            const badge = document.getElementById('dueBadge');
-            badge.textContent = due;
-            badge.style.display = due > 0 ? 'block' : 'none';
-
-            const startBtn = document.getElementById('startBtn');
-            const practiceBtn = document.getElementById('practiceBtn');
-            startBtn.disabled = due === 0;
-            startBtn.textContent = due === 0 ? 'No Cards Due' : 'Start Studying';
-            practiceBtn.style.display = (due === 0 && cards.length > 0) ? 'inline-block' : 'none';
-        }
-
-        function renderList() {
-            const list = document.getElementById('wordList');
-            if (cards.length === 0) { list.innerHTML = '<div class="empty">No cards yet</div>'; return; }
-
-            const sortType = document.getElementById('sortSelect').value;
-            const sorted = [...cards].map((c, i) => ({...c, idx: i})).sort((a, b) => {
-                const aDue = (a.due || 0) <= Date.now(), bDue = (b.due || 0) <= Date.now();
-                switch(sortType) {
-                    case 'due': return bDue - aDue || (b.level || 0) - (a.level || 0);
-                    case 'name-asc': return a.w.localeCompare(b.w);
-                    case 'name-desc': return b.w.localeCompare(a.w);
-                    case 'level-asc': return (a.level || 0) - (b.level || 0);
-                    case 'level-desc': return (b.level || 0) - (a.level || 0);
-                }
-            });
-
-            list.innerHTML = sorted.map(c => {
-                const isDue = (c.due || 0) <= Date.now();
-                const level = c.level || 0;
-                const status = isDue ? 'due' : level >= 4 ? 'ok' : 'new';
-                const next = c.due ? formatTime(Math.max(0, Math.ceil((c.due - Date.now()) / 60000))) : 'now';
-                const stage = level === 0 ? 'New' : level < 4 ? `Learning ${level}` : 'Mastered';
-                return `<div class="word-item"><div class="word-status ${status}"></div><div class="word-info"><div class="word-name">${c.w}</div><div class="word-meta">${stage} · ${isDue ? 'Due now' : 'Next: ' + next}</div></div><div class="word-actions"><button onclick="editCard(${c.idx})" title="Edit">✎</button><button class="btn-danger" onclick="deleteCard(${c.idx})" title="Delete">🗑</button></div></div>`;
-            }).join('');
-        }
-
-        function startStudy() { practiceMode = false; showCard(); }
-        function startPractice() { practiceMode = true; showCard(); }
-
-        function showCard() {
-            document.getElementById('welcomeScreen').style.display = 'none';
-            document.getElementById('doneScreen').style.display = 'none';
-            document.getElementById('studyInterface').style.display = '';
-            nextCard();
-        }
-
-        function showWelcome() {
-            practiceMode = false;
-            document.getElementById('studyInterface').style.display = 'none';
-            document.getElementById('doneScreen').style.display = 'none';
-            document.getElementById('welcomeScreen').style.display = '';
-            updateStats(); renderList();
-        }
-
-        function nextCard() {
-            const pool = practiceMode ? cards : getDueCards();
-            if (pool.length === 0) {
-                document.getElementById('studyInterface').style.display = 'none';
-                document.getElementById('doneScreen').style.display = '';
-                return;
+            /* =============================================
+               MODULE 2: UTILITIES
+               ============================================= */
+            function escapeHTML(str) {
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
             }
-            waitingForNext = false;
-            currentCard = pool[Math.floor(Math.random() * pool.length)];
-            const regex = new RegExp(currentCard.w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
-            document.getElementById('sentence').textContent = currentCard.s.replace(regex, '___');
-            document.getElementById('hint').textContent = `${currentCard.d} (${currentCard.w[0]}...)`;
-            document.getElementById('answer').value = '';
-            document.getElementById('answer').readOnly = false;
-            document.getElementById('answer').style.background = '';
-            document.getElementById('msg').textContent = '';
-            document.getElementById('answer').focus();
-        }
 
-        document.getElementById('answer').onkeydown = function(e) {
-            if (e.key !== 'Enter' || !currentCard) return;
-            if (waitingForNext) { nextCard(); return; }
+            /* =============================================
+               MODULE 3: DOM CACHE
+               ============================================= */
+            const DOM = {};
 
-            const input = this.value.trim().toLowerCase();
-            const correct = currentCard.w.toLowerCase();
-            const regex = new RegExp(`(${currentCard.w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-
-            if (input === correct) {
-                scheduleCard(currentCard, true);
-                saveCards();
-                document.getElementById('sentence').innerHTML = currentCard.s.replace(regex, '<span class="ok">$1</span>');
-                document.getElementById('msg').innerHTML = '<span style="color: var(--text-secondary);">Press Enter to continue</span>';
-                this.readOnly = true;
-                this.style.background = '#e8e8ed';
-                waitingForNext = true;
-            } else {
-                scheduleCard(currentCard, false);
-                saveCards();
-                document.getElementById('sentence').innerHTML = currentCard.s.replace(regex, '<span class="no">$1</span>');
-                document.getElementById('msg').innerHTML = '<span style="color: var(--text-secondary);">Press Enter to try again</span>';
-                this.value = '';
-                this.readOnly = true;
-                this.style.background = '#ffeceb';
-                this.classList.add('shake');
-                setTimeout(() => this.classList.remove('shake'), 500);
-                waitingForNext = true;
+            function cacheDOMElements() {
+                DOM.welcomeScreen = document.getElementById('welcomeScreen');
+                DOM.studyInterface = document.getElementById('studyInterface');
+                DOM.doneScreen = document.getElementById('doneScreen');
+                DOM.dueCount = document.getElementById('dueCount');
+                DOM.startBtn = document.getElementById('startBtn');
+                DOM.practiceBtn = document.getElementById('practiceBtn');
+                DOM.sentence = document.getElementById('sentence');
+                DOM.hint = document.getElementById('hint');
+                DOM.answer = document.getElementById('answer');
+                DOM.msg = document.getElementById('msg');
+                DOM.rightPanel = document.getElementById('rightPanel');
+                DOM.panelOverlay = document.getElementById('panelOverlay');
+                DOM.panelToggleBtn = document.getElementById('panelToggleBtn');
+                DOM.dueBadge = document.getElementById('dueBadge');
+                DOM.statDue = document.getElementById('statDue');
+                DOM.statLearning = document.getElementById('statLearning');
+                DOM.statMastered = document.getElementById('statMastered');
+                DOM.totalCards = document.getElementById('totalCards');
+                DOM.sortSelect = document.getElementById('sortSelect');
+                DOM.wordList = document.getElementById('wordList');
+                DOM.modal = document.getElementById('modal');
+                DOM.modalTitle = document.getElementById('modalTitle');
+                DOM.mWord = document.getElementById('mWord');
+                DOM.mDef = document.getElementById('mDef');
+                DOM.mSent = document.getElementById('mSent');
+                DOM.mError = document.getElementById('mError');
+                DOM.importInput = document.getElementById('importInput');
+                DOM.backHomeBtn = document.getElementById('backHomeBtn');
+                DOM.addCardBtn = document.getElementById('addCardBtn');
+                DOM.modalCancelBtn = document.getElementById('modalCancelBtn');
+                DOM.modalSaveBtn = document.getElementById('modalSaveBtn');
+                DOM.exportBtn = document.getElementById('exportBtn');
+                DOM.importBtn = document.getElementById('importBtn');
+                DOM.clearBtn = document.getElementById('clearBtn');
+                DOM.toastContainer = document.getElementById('toastContainer');
+                DOM.confirmOverlay = document.getElementById('confirmOverlay');
+                DOM.confirmIcon = document.getElementById('confirmIcon');
+                DOM.confirmTitle = document.getElementById('confirmTitle');
+                DOM.confirmMessage = document.getElementById('confirmMessage');
+                DOM.confirmCancelBtn = document.getElementById('confirmCancelBtn');
+                DOM.confirmOkBtn = document.getElementById('confirmOkBtn');
             }
-            updateStats(); renderList();
-        };
 
-        function openModal() {
-            editingIndex = -1;
-            document.getElementById('modalTitle').textContent = 'Add Card';
-            document.getElementById('mWord').value = '';
-            document.getElementById('mDef').value = '';
-            document.getElementById('mSent').value = '';
-            document.getElementById('mError').classList.remove('show');
-            document.getElementById('modal').classList.add('show');
-            document.getElementById('mWord').focus();
-        }
+            /* =============================================
+               MODULE 4: STORAGE
+               ============================================= */
+            const Storage = {
+                load() {
+                    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+                },
 
-        function editCard(index) {
-            editingIndex = index;
-            const c = cards[index];
-            document.getElementById('modalTitle').textContent = 'Edit Card';
-            document.getElementById('mWord').value = c.w;
-            document.getElementById('mDef').value = c.d;
-            document.getElementById('mSent').value = c.s;
-            document.getElementById('mError').classList.remove('show');
-            document.getElementById('modal').classList.add('show');
-        }
+                save(cards) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+                },
 
-        function closeModal() { document.getElementById('modal').classList.remove('show'); }
+                wasCleared() {
+                    return localStorage.getItem(STORAGE_CLEARED_KEY) === 'true';
+                },
 
-        function saveCard() {
-            const w = document.getElementById('mWord').value.trim();
-            const d = document.getElementById('mDef').value.trim();
-            const s = document.getElementById('mSent').value.trim();
+                setCleared() {
+                    localStorage.setItem(STORAGE_CLEARED_KEY, 'true');
+                },
 
-            if (!w || !d || !s) { alert('Please fill in all fields'); return; }
-            if (!s.toLowerCase().includes(w.toLowerCase())) { document.getElementById('mError').classList.add('show'); return; }
+                clearClearedFlag() {
+                    localStorage.removeItem(STORAGE_CLEARED_KEY);
+                },
+            };
 
-            if (editingIndex >= 0) {
-                cards[editingIndex] = { ...cards[editingIndex], w, d, s };
-            } else {
-                cards.push({ w, d, s, level: 0, due: 0 });
-            }
-            saveCards();
-            closeModal();
-            updateStats(); renderList();
-        }
+            /* =============================================
+               MODULE 5: SPACED REPETITION (SRS)
+               ============================================= */
+            const SRS = {
+                getDueCards(cards) {
+                    return cards.filter(c => (c.due || 0) <= Date.now());
+                },
 
-        function deleteCard(index) {
-            if (!confirm(`Delete "${cards[index].w}"?`)) return;
-            cards.splice(index, 1);
-            saveCards();
-            updateStats(); renderList();
-        }
+                schedule(card, correct) {
+                    if (!card.level) card.level = 0;
+                    card.level = correct ? card.level + 1 : Math.max(0, card.level - 1);
+                    const intervalIdx = Math.min(card.level, INTERVALS_MINUTES.length - 1);
+                    card.due = Date.now() + (INTERVALS_MINUTES[intervalIdx] || 1) * 60000;
+                },
 
-        function exportData() {
-            const blob = new Blob([JSON.stringify(cards, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `flashcards-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
+                isMastered(card) {
+                    return (card.level || 0) >= MASTERY_THRESHOLD;
+                },
 
-        function importData(input) {
-            const file = input.files[0];
-            if (!file) return;
-            file.text().then(text => {
-                try {
-                    const data = JSON.parse(text);
-                    if (!Array.isArray(data)) throw new Error('Invalid format');
-                    const valid = data.filter(c => c.w && c.d && c.s);
-                    if (confirm(`Import ${valid.length} cards? This will merge with existing ${cards.length} cards.`)) {
-                        cards = cards.concat(valid);
-                        saveCards();
-                        updateStats(); renderList();
+                formatTime(mins) {
+                    if (mins < 60) return `${mins}m`;
+                    if (mins < 1440) return `${Math.round(mins / 60)}h`;
+                    return `${Math.round(mins / 1440)}d`;
+                },
+            };
+
+            /* =============================================
+               MODULE 6: CARD MANAGER (CRUD)
+               ============================================= */
+            let cards = [];
+            let editingIndex = -1;
+
+            const CardManager = {
+                init() {
+                    cards = Storage.load();
+                    if (cards.length === 0 && !Storage.wasCleared()) {
+                        cards = [...SEED_CARDS];
+                        Storage.save(cards);
                     }
-                } catch (e) { alert('Error: ' + e.message); }
-                input.value = '';
-            });
-        }
+                },
 
-        function clearData() {
-            if (!confirm(`Delete all ${cards.length} cards? This cannot be undone.`)) return;
-            cards = [];
-            saveCards();
-            updateStats(); renderList();
-        }
+                add(word, definition, sentence) {
+                    cards.push({ w: word, d: definition, s: sentence, level: 0, due: 0 });
+                    Storage.clearClearedFlag();
+                    Storage.save(cards);
+                },
 
-        document.onkeydown = e => { if (e.key === 'Escape') { closeModal(); closePanel(); } };
+                update(index, word, definition, sentence) {
+                    cards[index] = { ...cards[index], w: word, d: definition, s: sentence };
+                    Storage.save(cards);
+                },
 
-        updateStats(); renderList();
+                remove(index) {
+                    cards.splice(index, 1);
+                    Storage.save(cards);
+                },
+
+                clearAll() {
+                    cards = [];
+                    Storage.save(cards);
+                    Storage.setCleared();
+                },
+
+                markAnswer(card, correct) {
+                    SRS.schedule(card, correct);
+                    Storage.save(cards);
+                },
+
+                importCards(newCards) {
+                    const existing = new Set(cards.map(c => c.w.toLowerCase()));
+                    const unique = newCards.filter(c => !existing.has(c.w.toLowerCase()));
+                    if (unique.length > 0) {
+                        cards = cards.concat(unique);
+                        Storage.clearClearedFlag();
+                        Storage.save(cards);
+                    }
+                    return { imported: unique.length, skipped: newCards.length - unique.length };
+                },
+
+                contains(card) {
+                    return cards.indexOf(card) !== -1;
+                },
+            };
+
+            /* =============================================
+               MODULE 7: TOAST NOTIFICATIONS
+               ============================================= */
+            const Toast = {
+                show(message, type = '') {
+                    const toast = document.createElement('div');
+                    toast.className = `toast ${type}`;
+                    toast.textContent = message;
+                    DOM.toastContainer.appendChild(toast);
+
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => toast.classList.add('show'));
+                    });
+
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                        setTimeout(() => toast.remove(), 300);
+                    }, 3000);
+                },
+
+                success(msg) { Toast.show(msg, 'success'); },
+                error(msg) { Toast.show(msg, 'error'); },
+                warning(msg) { Toast.show(msg, 'warning'); },
+                info(msg) { Toast.show(msg, ''); },
+            };
+
+            /* =============================================
+               MODULE 8: CONFIRM DIALOG
+               ============================================= */
+            let confirmCallback = null;
+
+            const ConfirmDialog = {
+                show({ icon = '⚠️', title = 'Are you sure?', message = '', confirmText = 'Confirm', danger = true, onConfirm }) {
+                    DOM.confirmIcon.textContent = icon;
+                    DOM.confirmTitle.textContent = title;
+                    DOM.confirmMessage.textContent = message;
+                    DOM.confirmOkBtn.textContent = confirmText;
+                    DOM.confirmOkBtn.className = danger ? 'btn-confirm-danger' : 'btn-primary';
+                    confirmCallback = onConfirm;
+                    DOM.confirmOverlay.classList.add('show');
+                },
+
+                close() {
+                    DOM.confirmOverlay.classList.remove('show');
+                    confirmCallback = null;
+                },
+
+                confirm() {
+                    if (confirmCallback) confirmCallback();
+                    ConfirmDialog.close();
+                },
+            };
+
+            /* =============================================
+               MODULE 9: UI RENDERER
+               ============================================= */
+            const UI = {
+                updateStats() {
+                    const due = SRS.getDueCards(cards).length;
+                    const mastered = cards.filter(c => SRS.isMastered(c)).length;
+                    const learning = cards.length - mastered;
+
+                    DOM.dueCount.textContent = due;
+                    DOM.statDue.textContent = due;
+                    DOM.statLearning.textContent = learning;
+                    DOM.statMastered.textContent = mastered;
+                    DOM.totalCards.textContent = cards.length;
+
+                    DOM.dueBadge.textContent = due;
+                    DOM.dueBadge.style.display = due > 0 ? 'block' : 'none';
+
+                    DOM.startBtn.disabled = due === 0;
+                    DOM.startBtn.textContent = due === 0 ? 'No Cards Due' : 'Start Studying';
+                    DOM.practiceBtn.style.display = (due === 0 && cards.length > 0) ? 'inline-block' : 'none';
+                },
+
+                renderList() {
+                    if (cards.length === 0) {
+                        DOM.wordList.innerHTML = '<div class="empty">No cards yet</div>';
+                        return;
+                    }
+
+                    const sortType = DOM.sortSelect.value;
+                    const sorted = [...cards]
+                        .map((c, i) => ({ ...c, idx: i }))
+                        .sort((a, b) => {
+                            const aDue = (a.due || 0) <= Date.now();
+                            const bDue = (b.due || 0) <= Date.now();
+                            switch (sortType) {
+                                case 'due': return bDue - aDue || (b.level || 0) - (a.level || 0);
+                                case 'name-asc': return a.w.localeCompare(b.w);
+                                case 'name-desc': return b.w.localeCompare(a.w);
+                                case 'level-asc': return (a.level || 0) - (b.level || 0);
+                                case 'level-desc': return (b.level || 0) - (a.level || 0);
+                                default: return 0;
+                            }
+                        });
+
+                    DOM.wordList.innerHTML = sorted.map(c => {
+                        const isDue = (c.due || 0) <= Date.now();
+                        const level = c.level || 0;
+                        const status = isDue ? 'due' : level >= MASTERY_THRESHOLD ? 'ok' : 'new';
+                        const next = c.due ? SRS.formatTime(Math.max(0, Math.ceil((c.due - Date.now()) / 60000))) : 'now';
+                        const stage = level === 0 ? 'New' : level < MASTERY_THRESHOLD ? `Learning ${level}` : 'Mastered';
+
+                        return `<div class="word-item">
+                        <div class="word-status ${escapeHTML(status)}"></div>
+                        <div class="word-info">
+                            <div class="word-name">${escapeHTML(c.w)}</div>
+                            <div class="word-meta">${escapeHTML(stage)} · ${isDue ? 'Due now' : 'Next: ' + escapeHTML(next)}</div>
+                        </div>
+                        <div class="word-actions">
+                            <button onclick="App.editCard(${c.idx})" title="Edit">✎</button>
+                            <button class="btn-danger" onclick="App.deleteCard(${c.idx})" title="Delete">🗑</button>
+                        </div>
+                    </div>`;
+                    }).join('');
+                },
+
+                refresh() {
+                    UI.updateStats();
+                    UI.renderList();
+                },
+            };
+
+            /* =============================================
+               MODULE 10: PANEL CONTROLLER
+               ============================================= */
+            const Panel = {
+                toggle() {
+                    DOM.rightPanel.classList.toggle('open');
+                    DOM.panelOverlay.classList.toggle('show');
+                },
+
+                close() {
+                    DOM.rightPanel.classList.remove('open');
+                    DOM.panelOverlay.classList.remove('show');
+                },
+            };
+
+            /* =============================================
+               MODULE 11: MODAL CONTROLLER
+               ============================================= */
+            const Modal = {
+                open() {
+                    editingIndex = -1;
+                    DOM.modalTitle.textContent = 'Add Card';
+                    DOM.mWord.value = '';
+                    DOM.mDef.value = '';
+                    DOM.mSent.value = '';
+                    DOM.mError.classList.remove('show');
+                    DOM.modal.classList.add('show');
+                    DOM.mWord.focus();
+                },
+
+                openForEdit(index) {
+                    editingIndex = index;
+                    const c = cards[index];
+                    DOM.modalTitle.textContent = 'Edit Card';
+                    DOM.mWord.value = c.w;
+                    DOM.mDef.value = c.d;
+                    DOM.mSent.value = c.s;
+                    DOM.mError.classList.remove('show');
+                    DOM.modal.classList.add('show');
+                },
+
+                close() {
+                    DOM.modal.classList.remove('show');
+                },
+
+                save() {
+                    const w = DOM.mWord.value.trim();
+                    const d = DOM.mDef.value.trim();
+                    const s = DOM.mSent.value.trim();
+
+                    if (!w || !d || !s) {
+                        Toast.warning('Please fill in all fields');
+                        return;
+                    }
+                    if (!s.toLowerCase().includes(w.toLowerCase())) {
+                        DOM.mError.classList.add('show');
+                        return;
+                    }
+
+                    if (editingIndex >= 0) {
+                        CardManager.update(editingIndex, w, d, s);
+                    } else {
+                        CardManager.add(w, d, s);
+                    }
+
+                    Modal.close();
+                    UI.refresh();
+                    Toast.success(editingIndex >= 0 ? 'Card updated' : 'Card added');
+                },
+            };
+
+            /* =============================================
+               MODULE 12: STUDY SESSION
+               ============================================= */
+            let currentCard = null;
+            let waitingForNext = false;
+            let retryingSameCard = false;
+            let practiceMode = false;
+            let practiceQueue = [];
+
+            const Study = {
+                start() {
+                    practiceMode = false;
+                    Study._showInterface();
+                },
+
+                startPractice() {
+                    practiceMode = true;
+                    practiceQueue = [...cards].sort(() => Math.random() - 0.5);
+                    Study._showInterface();
+                },
+
+                _showInterface() {
+                    DOM.welcomeScreen.style.display = 'none';
+                    DOM.doneScreen.style.display = 'none';
+                    DOM.studyInterface.style.display = '';
+                    Study.nextCard();
+                },
+
+                showWelcome() {
+                    practiceMode = false;
+                    currentCard = null;
+                    DOM.studyInterface.style.display = 'none';
+                    DOM.doneScreen.style.display = 'none';
+                    DOM.welcomeScreen.style.display = '';
+                    UI.refresh();
+                },
+
+                nextCard() {
+                    const pool = practiceMode ? practiceQueue : SRS.getDueCards(cards);
+                    if (pool.length === 0) {
+                        currentCard = null;
+                        DOM.studyInterface.style.display = 'none';
+                        DOM.doneScreen.style.display = '';
+                        return;
+                    }
+
+                    waitingForNext = false;
+                    retryingSameCard = false;
+                    currentCard = practiceMode ? pool.shift() : pool[Math.floor(Math.random() * pool.length)];
+                    Study._presentCard(currentCard);
+                },
+
+                _presentCard(card) {
+                    const regex = new RegExp(card.w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                    DOM.sentence.textContent = card.s.replace(regex, '___');
+                    DOM.hint.textContent = `${card.d} (${card.w[0]}...)`;
+                    DOM.answer.value = '';
+                    DOM.answer.readOnly = false;
+                    DOM.answer.className = '';
+                    DOM.msg.textContent = '';
+                    DOM.answer.focus();
+                },
+
+                handleAnswer() {
+                    if (!currentCard) return;
+
+                    // Safety: if current card was deleted mid-study, advance
+                    if (!CardManager.contains(currentCard)) {
+                        Study.nextCard();
+                        return;
+                    }
+
+                    if (waitingForNext) {
+                        if (retryingSameCard) {
+                            retryingSameCard = false;
+                            waitingForNext = false;
+                            Study._presentCard(currentCard);
+                        } else {
+                            Study.nextCard();
+                        }
+                        return;
+                    }
+
+                    const input = DOM.answer.value.trim().toLowerCase();
+                    const correct = currentCard.w.toLowerCase();
+                    const regex = new RegExp(`(${currentCard.w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+
+                    if (input === correct) {
+                        CardManager.markAnswer(currentCard, true);
+                        retryingSameCard = false;
+                        DOM.sentence.innerHTML = currentCard.s.replace(regex, '<span class="ok">$1</span>');
+                        DOM.msg.innerHTML = '<span style="color: var(--text-secondary);">Press Enter to continue</span>';
+                        DOM.answer.readOnly = true;
+                        DOM.answer.className = 'input-correct';
+                    } else {
+                        CardManager.markAnswer(currentCard, false);
+                        retryingSameCard = true;
+                        DOM.sentence.innerHTML = currentCard.s.replace(regex, '<span class="no">$1</span>');
+                        DOM.msg.innerHTML = '<span style="color: var(--text-secondary);">Press Enter to try again</span>';
+                        DOM.answer.value = '';
+                        DOM.answer.readOnly = true;
+                        DOM.answer.className = 'input-wrong';
+                        DOM.answer.classList.add('shake');
+                        setTimeout(() => DOM.answer.classList.remove('shake'), 500);
+                    }
+
+                    waitingForNext = true;
+                    UI.refresh();
+                },
+
+                onCardDeleted() {
+                    // If the deleted card was the one being studied, advance
+                    if (currentCard && !CardManager.contains(currentCard)) {
+                        Study.nextCard();
+                    }
+                },
+            };
+
+            /* =============================================
+               MODULE 13: DATA IMPORT / EXPORT
+               ============================================= */
+            const DataIO = {
+                export() {
+                    const blob = new Blob([JSON.stringify(cards, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `flashcards-${new Date().toISOString().split('T')[0]}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    Toast.success('Cards exported');
+                },
+
+                import(input) {
+                    const file = input.files[0];
+                    if (!file) return;
+                    file.text().then(text => {
+                        try {
+                            const data = JSON.parse(text);
+                            if (!Array.isArray(data)) throw new Error('Invalid format');
+                            const valid = data.filter(c => c.w && c.d && c.s);
+
+                            if (valid.length === 0) {
+                                Toast.warning('No valid cards found in file');
+                                return;
+                            }
+
+                            ConfirmDialog.show({
+                                icon: '📥',
+                                title: 'Import Cards',
+                                message: `Found ${valid.length} card(s). Duplicates will be skipped automatically.`,
+                                confirmText: 'Import',
+                                danger: false,
+                                onConfirm: () => {
+                                    const result = CardManager.importCards(valid);
+                                    UI.refresh();
+                                    if (result.imported > 0) {
+                                        Toast.success(`Imported ${result.imported} new card(s)`);
+                                    }
+                                    if (result.skipped > 0) {
+                                        Toast.info(`Skipped ${result.skipped} duplicate(s)`);
+                                    }
+                                },
+                            });
+                        } catch (e) {
+                            Toast.error('Import failed: ' + e.message);
+                        }
+                        input.value = '';
+                    });
+                },
+
+                clearAll() {
+                    if (cards.length === 0) {
+                        Toast.info('No cards to clear');
+                        return;
+                    }
+                    ConfirmDialog.show({
+                        icon: '🗑️',
+                        title: 'Clear All Cards',
+                        message: `This will permanently delete all ${cards.length} card(s). This cannot be undone.`,
+                        confirmText: 'Delete All',
+                        danger: true,
+                        onConfirm: () => {
+                            CardManager.clearAll();
+                            currentCard = null;
+                            UI.refresh();
+                            // If we were studying, go back to welcome
+                            if (DOM.studyInterface.style.display !== 'none' || DOM.doneScreen.style.display !== 'none') {
+                                Study.showWelcome();
+                            }
+                            Toast.success('All cards cleared');
+                        },
+                    });
+                },
+            };
+
+            /* =============================================
+               MODULE 14: EVENT BINDING
+               ============================================= */
+            function bindEvents() {
+                // Study buttons
+                DOM.startBtn.addEventListener('click', Study.start);
+                DOM.practiceBtn.addEventListener('click', Study.startPractice);
+                DOM.backHomeBtn.addEventListener('click', Study.showWelcome);
+
+                // Answer input
+                DOM.answer.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') Study.handleAnswer();
+                });
+
+                // Panel
+                DOM.panelToggleBtn.addEventListener('click', Panel.toggle);
+                DOM.panelOverlay.addEventListener('click', Panel.close);
+
+                // Modal
+                DOM.addCardBtn.addEventListener('click', Modal.open);
+                DOM.modalCancelBtn.addEventListener('click', Modal.close);
+                DOM.modalSaveBtn.addEventListener('click', Modal.save);
+                DOM.mWord.addEventListener('keydown', (e) => { if (e.key === 'Enter') Modal.save(); });
+                DOM.mDef.addEventListener('keydown', (e) => { if (e.key === 'Enter') Modal.save(); });
+                DOM.modal.addEventListener('click', (e) => {
+                    if (e.target === DOM.modal) Modal.close();
+                });
+
+                // Data actions
+                DOM.exportBtn.addEventListener('click', DataIO.export);
+                DOM.importBtn.addEventListener('click', () => DOM.importInput.click());
+                DOM.importInput.addEventListener('change', () => DataIO.import(DOM.importInput));
+                DOM.clearBtn.addEventListener('click', DataIO.clearAll);
+
+                // Sort
+                DOM.sortSelect.addEventListener('change', UI.renderList);
+
+                // Confirm dialog
+                DOM.confirmCancelBtn.addEventListener('click', ConfirmDialog.close);
+                DOM.confirmOkBtn.addEventListener('click', ConfirmDialog.confirm);
+                DOM.confirmOverlay.addEventListener('click', (e) => {
+                    if (e.target === DOM.confirmOverlay) ConfirmDialog.close();
+                });
+
+                // Global keyboard
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        ConfirmDialog.close();
+                        Modal.close();
+                        Panel.close();
+                    }
+                });
+            }
+
+            /* =============================================
+               MODULE 15: APP INIT
+               ============================================= */
+            function init() {
+                cacheDOMElements();
+                CardManager.init();
+                bindEvents();
+                UI.refresh();
+            }
+
+            /* =============================================
+               PUBLIC API (for inline onclick in word list)
+               ============================================= */
+            return {
+                init,
+                editCard: (i) => Modal.openForEdit(i),
+                deleteCard: (i) => {
+                    ConfirmDialog.show({
+                        icon: '🗑️',
+                        title: 'Delete Card',
+                        message: `Delete "${cards[i].w}"? This cannot be undone.`,
+                        confirmText: 'Delete',
+                        danger: true,
+                        onConfirm: () => {
+                            CardManager.remove(i);
+                            Study.onCardDeleted();
+                            UI.refresh();
+                            Toast.success('Card deleted');
+                        },
+                    });
+                },
+            };
+        })();
+
+        // Boot the app
+        App.init();
     </script>
 </body>
+
 </html>
